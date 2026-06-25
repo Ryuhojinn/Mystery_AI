@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>消えた提出ファイル</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <div class="game-screen">
+
+    <div class="top-bar">
+      <div>
+        <h1>消えた提出ファイル</h1>
+        <p>AI活用テキスト推理ゲーム</p>
+      </div>
+
+      <button class="top-button" onclick="openFinalAnswer()">最終推理</button>
+    </div>
+
+    <div class="main-area">
+
+      <div class="character-area">
+        <img id="characterImage" src="images/unknown.png" alt="character">
+      </div>
+
+      <div class="side-panel">
+        <h2>容疑者</h2>
+        <button onclick="selectSuspect('sato')">佐藤</button>
+        <button onclick="selectSuspect('tanaka')">田中</button>
+        <button onclick="selectSuspect('suzuki')">鈴木</button>
+
+        <h2>証拠</h2>
+        <button onclick="selectEvidence('none')">なし</button>
+        <button onclick="selectEvidence('accessLog')">アクセスログ</button>
+        <button onclick="selectEvidence('chatLog')">チャット履歴</button>
+        <button onclick="selectEvidence('usb')">USBメモリ</button>
+
+        <div class="status-box">
+          <p>現在の相手：<span id="currentSuspect">未選択</span></p>
+          <p>選択中の証拠：<span id="currentEvidence">なし</span></p>
+          <p>質問回数：<span id="questionCount">0 / 8</span></p>
+          <p>ヒント：<span id="hintCount">0 / 3</span></p>
+        </div>
+
+        <div class="evidence-box">
+          <h3>証拠内容</h3>
+          <p class="evidence-rule">※証拠提示は、容疑者1人につき1回まで</p>
+          <p id="evidenceDetail">証拠を選ぶと内容が表示されます。</p>
+        </div>
+
+        <div class="hint-box">
+          <h3>AIヒント</h3>
+          <button onclick="showHint()">AIヒントを見る</button>
+          <p id="hintArea">ヒントはまだ表示されていません。</p>
+        </div>
+
+        <div class="note-box">
+          <h3>調査ノート</h3>
+          <ul id="collectedEvidenceList">
+            <li>まだ証拠を提示していません。</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="dialogue-box">
+      <div class="name-box" id="speakerName">SYSTEM</div>
+
+      <div id="chatLog" class="dialogue-text">
+        共有フォルダから重要なファイルが削除された。<br>
+        右側から容疑者を選び、質問してください。
+      </div>
+
+      <div class="question-area">
+        <input type="text" id="questionInput" placeholder="質問を入力してください">
+        <button id="askButton" onclick="askQuestion()">質問する</button>
+      </div>
+    </div>
+
+  </div>
+
+  <div id="finalModal" class="modal">
+    <div class="modal-content">
+      <h2>最終推理</h2>
+
+      <p>犯人は誰だと思いますか？</p>
+
+      <select id="culpritSelect">
+        <option value="">選択してください</option>
+        <option value="sato">佐藤</option>
+        <option value="tanaka">田中</option>
+        <option value="suzuki">鈴木</option>
+      </select>
+
+      <p>理由を書いてください。</p>
+
+      <textarea id="reasonInput" placeholder="例：アクセスログでは田中のアカウントでログインしており、証言と矛盾しているため。"></textarea>
+
+      <div class="modal-buttons">
+        <button onclick="submitAnswer()">推理を提出する</button>
+        <button onclick="closeFinalAnswer()">閉じる</button>
+      </div>
+
+      <div id="resultArea" class="result"></div>
+    </div>
+  </div>
+
+  <script src="js/game.js?v=7"></script>
+</body>
+</html>
